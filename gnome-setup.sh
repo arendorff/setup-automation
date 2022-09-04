@@ -1,6 +1,10 @@
 
 #!/bin/usr/bash
 
+######
+## don't forget to setup color profile with icm file
+#####
+
 # update system
 sudo dnf update -y
 
@@ -35,6 +39,7 @@ tilix \
 steam \
 gnome-shell-extension-appindicator \
 flatpak \
+ddcutil \
 gnome-tweaks
 
 
@@ -62,15 +67,75 @@ org.telegram.desktop
 # dconf gnome config
 
 ## general
-dconf write org/gnome/desktop/interface/clock-show-weekday true
-dconf write org/gnome/desktop/interface/font-antialiasing "'rgba'"
-dconf write org/gnome/desktop/interface/font-hinting "'slight'"
-dconf write org/gnome/desktop/interface/gtk-theme "'adw-gtk3'"
-dconf write org/gnome/desktop/interface/monospace-font-name "'Source Code Pro 14'"
+dconf write /org/gnome/desktop/interface/clock-show-weekday true
+dconf write /org/gnome/desktop/interface/font-antialiasing "'rgba'"
+dconf write /org/gnome/desktop/interface/font-hinting "'slight'"
+dconf write /org/gnome/desktop/interface/gtk-theme "'adw-gtk3'"
+dconf write /org/gnome/desktop/interface/monospace-font-name "'Source Code Pro 14'"
 
 ## Laptop specific
-dconf write org/gnome/desktop/interface/text-scaling-factor "'1.25'"
-dconf write org/gnome/desktop/interface/show-battery-percentage true
+# dconf write org/gnome/desktop/interface/text-scaling-factor "'1.25'"
+# dconf write org/gnome/desktop/interface/show-battery-percentage true
+# dconf write /org/gnome/desktop/peripherals/touchpad/tap-to-click true
+# dconf write /org/gnome/desktop/peripherals/touchpad/two-finger-scrolling-enabled true
 
-# dconf write org/gnome/desktop/interface/toolkit-accessibility false
-# dconf write org/gnome/desktop/interface/color-scheme "'default'"
+
+## tilix
+dconf write /com/gexperts/Tilix/prompt-on-close false
+dconf write /com/gexperts/Tilix/terminal-title-style "'none'"
+dconf write /com/gexperts/Tilix/theme-variant "'system'"
+
+dconf write /com/gexperts/Tilix/keybindings/app-new-session "'<Alt>Return'"
+dconf write /com/gexperts/Tilix/keybindings/session-add-auto "'<Shift><Alt>Return'"
+dconf write /com/gexperts/Tilix/keybindings/session-switch-to-next-terminal "'<Alt>j'"
+dconf write /com/gexperts/Tilix/keybindings/session-switch-to-previous-terminal "'<Alt>k'"
+dconf write /com/gexperts/Tilix/keybindings/terminal-close "'<Alt>q'"
+dconf write /com/gexperts/Tilix/keybindings/win-switch-to-next-session "'<Alt>l'"
+dconf write /com/gexperts/Tilix/keybindings/win-switch-to-previous-session "'<Alt>h'"
+
+# keyboard layout
+dconf write /org/gnome/desktop/input-sources/show-all-sources true
+dconf write /org/gnome/desktop/input-sources/sources="'[('xkb', 'de+neo_qwertz')]'"
+dconf write /org/gnome/desktop/input-sources/xkb-options "'['altwin:swap_alt_win']'"
+
+# gnome search
+dconf write /org/gnome/desktop/search-providers/disabled "'['org.gnome.Contacts.desktop', 'org.gnome.Boxes.desktop', 'org.gnome.Calculator.desktop', 'org.gnome.Calendar.desktop', 'org.gnome.Characters.desktop', 'org.gnome.Epiphany.desktop', 'org.gnome.Terminal.desktop', 'org.gnome.Software.desktop', 'org.gnome.Photos.desktop', 'firefox.desktop', 'org.gnome.clocks.desktop']'"
+
+# gnome keybindings/shortcuts
+dconf write /org/gnome/desktop/wm/keybindings/close "'['<Super>q']'"
+dconf write /org/gnome/desktop/wm/keybindings/move-to-workspace-left "'['<Shift><Super>h']'"
+dconf write /org/gnome/desktop/wm/keybindings/move-to-workspace-right "'['<Shift><Super>l']'"
+dconf write /org/gnome/desktop/wm/keybindings/switch-to-workspace-left "'['<Super>h']'"
+dconf write /org/gnome/desktop/wm/keybindings/switch-to-workspace-right "'['<Super>l']'"
+dconf write /org/gnome/desktop/wm/keybindings/toggle-fullscreen "'['<Shift><Super>f']'"
+dconf write /org/gnome/desktop/wm/keybindings/toggle-maximized "'['<Super>f']'"
+
+dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/binding "'<Super>Return'"
+dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/command "'tilix'"
+dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/name "'tilix'"
+
+dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/binding "'<Super>w'"
+dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/command "'firefox'"
+dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/name "'firefox'"
+
+dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/binding "'<Super>r'"
+dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/command "'nautilus'"
+dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/name "'nautilus'"
+
+dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/binding "'<Super>t'"
+dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/command "'flatpak run org.telegram.desktop'"
+dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/name "'telegram'"
+
+dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/binding "'<Super>e'"
+dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/command "'flatpak run org.gnome.Geary'"
+dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/name "'geary'"
+
+# gnome-tweaks
+dconf write /org/gnome/desktop/wm/preferences/resize-with-right-button true
+dconf write /org/gnome/mutter/center-new-windows true
+dconf write /org/gnome/mutter/dynamic-workspaces false
+
+# nightlight
+dconf write /org/gnome/settings-daemon/plugins/color/night-light-enabled true
+dconf write /org/gnome/settings-daemon/plugins/color/night-light-last-coordinates "'(53.06901803988481, 8.8621750000000006)'"
+dconf write /org/gnome/settings-daemon/plugins/color/night-light-schedule-automatic false
